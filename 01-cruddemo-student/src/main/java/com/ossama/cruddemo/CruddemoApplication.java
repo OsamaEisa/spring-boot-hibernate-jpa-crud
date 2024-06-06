@@ -1,5 +1,7 @@
 package com.ossama.cruddemo;
 
+import com.ossama.cruddemo.dao.StudentDAO;
+import com.ossama.cruddemo.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,13 +14,23 @@ public class CruddemoApplication {
 		SpringApplication.run(CruddemoApplication.class, args);
 	}
 
-	// CommanLineRunner is from Spring boot
+	// CommandLineRunner is from Spring boot
 	@Bean
-	public CommandLineRunner commandLineRunner() {
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
 			// Executed after the Spring Beans have been loaded
-			System.out.println("Hello from runner");
+			createStudent(studentDAO);
 		};
+	}
+
+	private void createStudent(StudentDAO studentDAO) {
+		// create the student object
+		System.out.println("Creating new student...");
+		Student student = new Student("Osama", "Eisa", "osamaeisa@fi.com");
+		// save the student object
+		studentDAO.save(student);
+		// display the id of the student
+		System.out.println(student.getId());
 	}
 
 }
