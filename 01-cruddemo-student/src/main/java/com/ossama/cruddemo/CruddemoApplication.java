@@ -23,13 +23,26 @@ public class CruddemoApplication {
 		return runner -> {
 			// Executed after the Spring Beans have been loaded
 			// createStudent(studentDAO);
+			createMultipleStudents(studentDAO);
 			// readStudent(studentDAO);
 			// getAllStudents(studentDAO);
 			// getStudentByLastName(studentDAO);
 			// updateStudent(studentDAO);
 			// deleteStudent(studentDAO);
-			deleteAll(studentDAO);
+			// deleteAll(studentDAO);
 		};
+	}
+
+	private void createMultipleStudents(StudentDAO studentDAO) {
+		System.out.println("Creating new students...");
+		Student student1 = new Student("Student 1", "last_name 1", "email_1@fi.com");
+		studentDAO.save(student1);
+
+		Student student2 = new Student("Student 2", "last_name 2", "email_2@fi.com");
+		studentDAO.save(student2);
+
+		Student student3 = new Student("Student 3", "last_name 3", "email_3@fi.com");
+		studentDAO.save(student3);
 	}
 
 	private void deleteAll(StudentDAO studentDAO) {
