@@ -24,8 +24,16 @@ public class CruddemoApplication {
 			// Executed after the Spring Beans have been loaded
 			// createStudent(studentDAO);
 			// readStudent(studentDAO);
-			getAllStudents(studentDAO);
+			// getAllStudents(studentDAO);
+			getStudentByLastName(studentDAO);
 		};
+	}
+
+	private void getStudentByLastName(StudentDAO studentDAO) {
+		List<Student> students = studentDAO.findByLastName("Eisa");
+		for (Student student : students) {
+			System.out.println(student);
+		}
 	}
 
 	private void getAllStudents(StudentDAO studentDAO) {

@@ -3,6 +3,7 @@ package com.ossama.cruddemo.dao;
 import com.ossama.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,4 +46,13 @@ public class StudentDAOImpl implements StudentDAO {
     // TypedQuery<Student> query = entityManager.createQuery( "FROM Student order by lastName desc", Student.class);
     return query.getResultList();
   }
+
+  @Override
+  // no need to add @Transactional as we read only
+  public List<Student> findByLastName(String lastName) {
+    TypedQuery<Student> query = entityManager.createQuery( "FROM Student WHERE lastName=:variable", Student.class);
+    query.setParameter("variable", lastName);
+    return query.getResultList();
+  }
+
 }
