@@ -2,6 +2,7 @@ package com.ossama.cruddemo;
 
 import com.ossama.cruddemo.dao.StudentDAO;
 import com.ossama.cruddemo.entity.Student;
+import jakarta.persistence.TypedQuery;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +20,19 @@ public class CruddemoApplication {
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
 			// Executed after the Spring Beans have been loaded
-			createStudent(studentDAO);
+			// createStudent(studentDAO);
+			readStudent(studentDAO);
 		};
+	}
+
+	private void readStudent(StudentDAO studentDAO) {
+		// creating a new student
+		System.out.println("Creating new student...");
+		Student student = new Student("Student 2", "last_name 2", "email2@fi.com");
+		// saving the new student
+		studentDAO.save(student);
+		// display the new student
+		System.out.println(studentDAO.findById(student.getId()));
 	}
 
 	private void createStudent(StudentDAO studentDAO) {
