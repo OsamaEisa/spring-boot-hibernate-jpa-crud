@@ -2,9 +2,12 @@ package com.ossama.cruddemo.dao;
 
 import com.ossama.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 // supports component scanning and make the checked exceptions into unchecked exceptions
 @Repository
@@ -33,5 +36,13 @@ public class StudentDAOImpl implements StudentDAO {
   // no need to add @Transactional as we read only
   public Student findById(Integer id) {
     return entityManager.find(Student.class, id);
+  }
+
+  @Override
+  // no need to add @Transactional as we read only
+  public List<Student> findAll() {
+    TypedQuery<Student> query = entityManager.createQuery( "FROM Student", Student.class);
+    // TypedQuery<Student> query = entityManager.createQuery( "FROM Student order by lastName desc", Student.class);
+    return query.getResultList();
   }
 }
